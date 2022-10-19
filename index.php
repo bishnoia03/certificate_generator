@@ -66,7 +66,7 @@ session_start();
             <input type="email" name="username" class="form-control" placeholder="Enter Username" /><br>
             <input type="password" name="password" class="form-control" placeholder="Password" required />
             <div class="modal-footer">
-              <button type="submit" name="signUp" class="btn btn-success">Log In</button>
+              <input type="submit" name="login" class="btn btn-success" value="Log In">
               <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
             </div>
           </form>
@@ -84,7 +84,7 @@ session_start();
 </html>
 <?php
 if (
-  isset($_POST["signUp"]) &&
+  isset($_POST["login"]) &&
   isset($_POST["username"]) &&
   isset($_POST["password"])
 ) {
@@ -123,7 +123,7 @@ if (
     } else {
       // authenticate user
       if ($row = $result->fetch_assoc()) {
-        $_SESSION["admin__auth_id"] = $row["admin_id"];
+        $_SESSION["admin__auth_id"] = $row["id"];
         header("Location:./admin");
       }
     }
@@ -142,8 +142,8 @@ if (
 
 
 <?php
-if (isset($_POST["name"])) {
-  // print_r($_FILES);
+if (isset($_POST["mobile"])) {
+  //print_r($_FILES);
 
   $name = $_POST["name"];
   $mobile = $_POST["mobile"];
