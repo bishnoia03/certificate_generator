@@ -23,7 +23,7 @@ include '../cdn.php';
         <center><h1>User's Input Data</h1></center>
         </div>
         <div class="col-3">
-        <a  href="http://harghartiranga.zya.me/admin/logout.php">Log Out</a>
+        <a  href="http://localhost/certificate_generator/admin/logout.php">Log Out</a>
         </div>
         </div>
        
@@ -56,11 +56,11 @@ include '../cdn.php';
                     <td id="name"><?php echo $row['name'] ?></td>
                     <td><?php echo $row['mobile'] ?></td>
                     <td><?php echo $row['email'] ?></td>
-                    <td><img src="http://harghartiranga.zya.me/uploads/<?php echo $row['image'] ?>" id="img1" alt="image" width="70px" height="70px" onclick="showImg('http://harghartiranga.zya.me/uploads/<?php echo $row['image'] ?>')"></td>
+                    <td><img src="http://localhost/certificate_generator/uploads/<?php echo $row['image'] ?>" id="img1" alt="image" width="70px" height="70px" onclick="showImg('http://localhost/certificate_generator/uploads/<?php echo $row['image'] ?>')"></td>
                     <td>
                      <form action="" method="post">  
                         <input type="hidden" name="name" value="<?php echo $row['name'];?>">  
-                      <button class="btn btn-success" type="submit" name="generate">Approve</button></td>
+                      <input class="btn btn-success" type="submit" name="aprove" value="Approve"></td>
                      </form>
 
                 </tr><?php 
@@ -97,7 +97,7 @@ include '../cdn.php';
 <!-- certificate generate here -->
 <?php
 
-if(isset($_POST["generate"])){
+if(isset($_POST["aprove"])){
 $output = "certificate.png";
 $font="font.ttf";
 $image=imagecreatefrompng("../certificate.png");
@@ -105,7 +105,7 @@ $color =imagecolorallocate($image,228,217,8);
 imagettftext($image,30,0,250,250,$color,$font,$_POST["name"]);
 imagepng($image,$output, 3);
 imagedestroy($image);
-?>
+}?>
 <script>
     function download(source) {
         const fileName = source.split('/').pop();
@@ -116,53 +116,12 @@ imagedestroy($image);
         el.click();
         el.remove();
     }
-    download("http://localhost/admin/certificate.png");
+    const btn = document.querySelector('.aprove');
+    btn.addEventListener('click', function (e) {
+        alert("certificate approved");
+        download("http://localhost/certificate_generator/admin/certificate.png");
+  e.stopPropagation();
+});
+    
    
 </script>
-
-<?php 
-// send mail 
-
-
-// (A) EMAIL SETTINGS
-// $mailTo = "abc@gmail.com";
-// $mailSubject = "Test Attachment";
-// $mailMessage = "<strong>Test Message</strong>";
-// $mailAttach = "http://localhost/admin/certificate.png";
-
-// (B) GENERATE RANDOM BOUNDARY TO SEPARATE MESSAGE & ATTACHMENTS
-// $mailBoundary = md5(time());
-
-
-// $mailHead = implode("\r\n", [
-//   "MIME-Version: 1.0",
-//   "Content-Type: multipart/mixed; boundary=\"$mailBoundary\""
-// ]);
-
-// // (C) DEFINE THE EMAIL MESSAGE
-// $mailBody = implode("\r\n", [
-//   "--$mailBoundary",
-//   "Content-type: text/html; charset=utf-8",
-//   "",
-//   $mailMessage
-// ]);
-
-// // (D) MANUALLY ENCODE & ATTACH THE FILE
-// $mailBody .= implode("\r\n", [
-//   "",
-//   "--$mailBoundary",
-//   "Content-Type: application/octet-stream; name=\"". basename($mailAttach) . "\"",
-//   "Content-Transfer-Encoding: base64",
-//   "Content-Disposition: attachment",
-//   "",
-//   chunk_split(base64_encode(file_get_contents($mailAttach))),
-//   "--$mailBoundary--"
-// ]);
-
-// // (E) SEND
-// echo mail($mailTo, $mailSubject, $mailBody, $mailHead)
-//   ? "OK" : "ERROR" ;
-
-
-
-// }?>
