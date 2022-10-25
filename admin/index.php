@@ -11,23 +11,40 @@ if (!isset($_SESSION["admin__auth_id"])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 <?php
 include '../cdn.php';
 ?>
 </head>
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-3"></div>
-        <div class="col-6">
-        <center><h1>User's Input Data</h1></center>
-        </div>
-        <div class="col-3">
-        <a  href="http://localhost/certificate_generator/admin/logout.php">Log Out</a>
-        </div>
-        </div>
-       
+<!-- sidebar -->
+<div id="mySidebar" class="sidebar">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Contact</a>
+  <a  href="http://localhost/certificate_generator/admin/logout.php">Log Out</a>
+</div>
+<!-- navbar  -->
+<nav>
+<div class="row">
+    <div class="col-4">
+    <div id="main">
+  <button class="openbtn" onclick="openNav()">☰</button>  
+</div>
     </div>
+    <div class="col-4">
+    <center><h1>User's Input Data</h1></center>
+    </div>
+    <div class="col-3">
+    <form class="d-flex align-items-center justify-content-center">
+      <input class="form-control m-3" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success m-2" type="submit">Search</button>
+    </form>
+    </div>
+</div>
+</nav>
+<!-- Dashboard -->
     <?php
     include '../conn.php';
     ?>
@@ -122,6 +139,16 @@ imagedestroy($image);
         download("http://localhost/certificate_generator/admin/certificate.png");
   e.stopPropagation();
 });
-    
+// sidebar code here
+
+function openNav() {
+  document.getElementById("mySidebar").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+}
    
 </script>
