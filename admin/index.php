@@ -23,7 +23,7 @@ include '../cdn.php';
   <a href="#">About</a>
   <a href="#">Services</a>
   <a href="#">Contact</a>
-  <a  href="http://localhost/certificate_generator/admin/logout.php">Log Out</a>
+  <a style="color:red;" href="http://localhost/certificate_generator/admin/logout.php">Log Out</a>
 </div>
 <!-- navbar  -->
 <nav>
@@ -37,10 +37,10 @@ include '../cdn.php';
     <center><h1>User's Input Data</h1></center>
     </div>
     <div class="col-3">
-    <form class="d-flex align-items-center justify-content-center">
-      <input class="form-control m-3" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success m-2" type="submit">Search</button>
-    </form>
+    <form method="post" class="d-flex align-items-center justify-content-center">
+      <input class="form-control m-3" type="search" placeholder="Search" name="search" aria-label="Search">
+      <button class="btn btn-outline-success m-2" name="searchbtn" type="submit">Search</button>
+    
     </div>
 </div>
 </nav>
@@ -64,8 +64,16 @@ include '../cdn.php';
                 </thead>
                 <tr>
                 <?php
+  if(isset($_POST["searchbtn"])){
+$searchresult = $_POST["search"];
+$sql = "SELECT * FROM user_input WHERE name like '%".$searchresult."%' OR mobile ='%".$searchresult."%' OR email ='%".$searchresult."%'";
+ $result = $db_conn->query($sql);
+  }
+  else
+  {
  $sql = "SELECT * FROM user_input";
  $result = $db_conn->query($sql);
+  }
  while($row = $result->fetch_assoc())
  {
  ?>
@@ -81,13 +89,14 @@ include '../cdn.php';
                      </form>
 
                 </tr><?php 
-            } 
+            }
  ?>
             </table>
         </div>
         <div class="col-1"></div>
     </div>
   </div>
+  </form>
   <!-- img modal -->
 
   <div class="modal fade" id="imgmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
